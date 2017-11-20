@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, Events } from 'ionic-angular';
-import { IFeed } from '../../models/feed';
+import { NavController, NavParams, AlertController, LoadingController, Events } from 'ionic-angular';
 import { FeedProvider } from '../../providers/feed/feed';
 import { IFeedItem } from '../../models/feed-item';
 
