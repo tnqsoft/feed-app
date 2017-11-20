@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>{{ channel.title }}</ion-title>
   </ion-navbar>
 
@@ -18,8 +18,8 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list>
-    <ion-item class="unread" *ngFor="let article of articles">
-      <ion-thumbnail item-start>
+    <ion-item *ngFor="let article of articles" (click)="openArticle(article)" [class.unread]="!article.is_read">
+      <ion-thumbnail item-start *ngIf="article.image">
         <img src="{{ article.image }}">
       </ion-thumbnail>
       <h2>{{ article.title }}</h2>

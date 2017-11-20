@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
-import { Response, Http, Headers, RequestOptions } from '@angular/http';
+import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import 'rxjs/add/operator/map'
@@ -16,44 +16,38 @@ import { IFeedItem } from '../../models/feed-item';
 @Injectable()
 export class FeedProvider {
 
-  private baseUrl = 'http://feed-api.tnqsoft.com/api/';
+  private baseUrl: string = 'http://feed-api.tnqsoft.com/api/';
+
+  public totalPage: number = 0;
+  public totalLimit: number = 0;
+  public totalRecord: number = 0;
 
   constructor(public http: Http, public authHttp: AuthHttp) {
     console.log('Hello FeedProvider Provider');
   }
 
-  getChannels(): Observable<Array<IFeed>> {
+  public getChannels(): Observable<Array<IFeed>> {
     return this.authHttp.get(`${this.baseUrl}channels`)
       .map(this.extractData)
       .catch(this.handleError);
-
-    // let headers = new Headers();
-    // headers.append('Content-Type', 'application/json');
-
-    // let options = new RequestOptions({
-    //   headers: headers
-    // });
-
-    // return this.http.post(`${this.baseUrl}admin/login`, requestBody, options)
-    //   .map(this.extractData)
-    //   .catch(this.handleError);
   }
 
-  getArticles(channelId: number, page: number): Observable<Array<IFeedItem>> {
-    return this.authHttp.get(`${this.baseUrl}channels/${channelId}/articles?page=${page}&limit=10`)
+  public getArticlesByChannel(channelId: number, page: number): Observable<Array<IFeedItem>> {
+    return this.authHttp.get(`${this.baseUrl}channels/${channelId}/articles?page=${page}&limit=15`)
       .map(this.extractData)
       .catch(this.handleError);
+  }
 
-    // let headers = new Headers();
-    // headers.append('Content-Type', 'application/json');
+  public getArticles(page: number): Observable<Array<IFeedItem>> {
+    return this.authHttp.get(`${this.baseUrl}articles?page=${page}&limit=15`)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 
-    // let options = new RequestOptions({
-    //   headers: headers
-    // });
-
-    // return this.http.post(`${this.baseUrl}admin/login`, requestBody, options)
-    //   .map(this.extractData)
-    //   .catch(this.handleError);
+  public trackingArticle(id: number): Observable<any> {
+    return this.authHttp.get(`${this.baseUrl}articles/${id}/tracking`)
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 
   /**
@@ -64,6 +58,20 @@ export class FeedProvider {
    */
   private extractData(res: Response) {
     let body = res.json();
+    let headers = res.headers;
+
+    if (headers.get('Data-Total-Page')) {
+      this.totalPage = parseInt(headers.get('Data-Total-Page'), 10);
+    }
+
+    if (headers.get('Data-Total-Record')) {
+      this.totalRecord = parseInt(headers.get('Data-Total-Record'), 10);
+    }
+
+    if (headers.get('Data-Limit')) {
+      this.totalLimit = parseInt(headers.get('Data-Limit'), 10);
+    }
+console.log(this.totalPage);
     return body || {};
   }
 

@@ -1,6 +1,6 @@
 <ion-menu [content]="content">
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color="primary">
       <ion-title>Channels</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -20,13 +20,13 @@
       </ion-item>
 
       <ion-item-divider color="light">Settings</ion-item-divider>
-      <ion-item>
+      <!-- <ion-item>
         <ion-icon name="settings" item-start></ion-icon>
         Channel Manager
-      </ion-item>
+      </ion-item> -->
       <ion-item menuClose (click)="logout()">
         <ion-icon name="log-out" item-start></ion-icon>
-        Logout
+        Sign Out
       </ion-item>
     </ion-list>
   </ion-content>

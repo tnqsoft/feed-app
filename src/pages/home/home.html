@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -8,34 +8,19 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-list>
-    <ion-item class="unread">
-      <ion-thumbnail item-start>
-        <img src="img/thumbnail-totoro.png">
+    <ion-item *ngFor="let article of articles" (click)="openArticle(article)" [class.unread]="!article.is_read">
+      <ion-thumbnail item-start *ngIf="article.image">
+        <img src="{{ article.image }}">
       </ion-thumbnail>
-      <h2>My Neighbor Totoro</h2>
-      <p>Hayao Miyazaki • 1988</p>
-      <ion-icon name="arrow-forward" item-end></ion-icon>
+      <h2>{{ article.title }}</h2>
+      <p>{{ article.pub_date }}</p>
     </ion-item>
   </ion-list>
-  <ion-list>
-    <ion-item class="unread">
-      <ion-thumbnail item-start>
-        <img src="img/thumbnail-totoro.png">
-      </ion-thumbnail>
-      <h2>My Neighbor Totoro</h2>
-      <p>Hayao Miyazaki • 1988</p>
-      <ion-icon name="arrow-forward" item-end></ion-icon>
-    </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-item>
-      <ion-thumbnail item-start>
-        <img src="img/thumbnail-totoro.png">
-      </ion-thumbnail>
-      <h2>My Neighbor Totoro</h2>
-      <p>Hayao Miyazaki • 1988</p>
-      <ion-icon name="arrow-forward" item-end></ion-icon>
-    </ion-item>
-  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="dots" loadingText="Loading more data..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

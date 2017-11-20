@@ -11,7 +11,7 @@ import { FeedPage } from '../pages/feed/feed';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UserProvider } from '../providers/user/user';
-import { HttpModule, Response, Http, Headers, RequestOptions } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { provideAuth, JwtHelper } from 'angular2-jwt';
 import { FeedProvider } from '../providers/feed/feed';
 import { AuthProvider } from '../providers/auth/auth';

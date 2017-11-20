@@ -5,4 +5,5 @@ export interface IFeedItem {
   link: string;
   image: string;
   pub_date: string;
+  is_read: boolean;
 }

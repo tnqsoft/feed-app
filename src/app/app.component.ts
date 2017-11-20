@@ -42,7 +42,11 @@ export class MyApp {
     // ];
     this.events.subscribe('event:user:logined', () => {
       this.getChannels();
-    })
+    });
+
+    this.events.subscribe('event:article:tracking', () => {
+      this.getChannels();
+    });
 
   }
 
