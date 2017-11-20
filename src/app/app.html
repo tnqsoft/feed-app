@@ -1,0 +1,37 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Channels</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <ion-spinner name="dots" *ngIf="channels.length == 0"></ion-spinner>
+
+      <ion-item menuClose *ngFor="let channel of channels" (click)="getFeed(channel)">
+        <ion-avatar item-start>
+          <img src="{{ channel.image }}">
+        </ion-avatar>
+        <h2>{{ channel.title }}</h2>
+        <p>{{ channel.category }}</p>
+        <ion-badge color="primary" item-end>{{ channel.number_unread_article }}</ion-badge>
+        <ion-icon name="arrow-forward" item-end></ion-icon>
+      </ion-item>
+
+      <ion-item-divider color="light">Settings</ion-item-divider>
+      <ion-item>
+        <ion-icon name="settings" item-start></ion-icon>
+        Channel Manager
+      </ion-item>
+      <ion-item menuClose (click)="logout()">
+        <ion-icon name="log-out" item-start></ion-icon>
+        Logout
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
